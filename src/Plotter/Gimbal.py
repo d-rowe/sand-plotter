@@ -13,18 +13,21 @@ STEPS_PER_THETA = 10
 
 class Gimbal:
     motor = RpiMotorLib.BYJMotor(MOTOR_NAME, MOTOR_TYPE)
+    current_theta: Decimal = 0
 
     def move_to(self, theta: Decimal):
+        theta_delta = theta - self.current_theta
+        is_cc_wise = theta_delta >= 0
         wait = 0.5
-        steps = STEPS_PER_THETA * theta
-        cc_wise = False
+        steps = abs(theta_delta) * STEPS_PER_THETA
         init_delay = 1
         self.motor.motor_run(
             GPIO_PINS,
             wait,
             steps,
-            cc_wise,
+            is_cc_wise,
             VERBOSE_MODE,
             STEP_TYPE_FULL,
             init_delay
         )
+        self.current_theta = theta

@@ -14,18 +14,21 @@ LENGTH_IN_MM = 300
 
 class Arm:
     motor = RpiMotorLib.BYJMotor(MOTOR_NAME, MOTOR_TYPE)
+    current_rho: Decimal = 0
 
     def move_to(self, rho: Decimal):
+        rho_delta = rho - self.current_rho
+        is_cc_wise = rho_delta >= 0
         wait = 0.5
-        steps = LENGTH_IN_MM * STEPS_PER_MM * rho
-        cc_wise = False
+        steps = abs(rho_delta) * LENGTH_IN_MM * STEPS_PER_MM
         init_delay = 1
         self.motor.motor_run(
             GPIO_PINS,
             wait,
             steps,
-            cc_wise,
+            is_cc_wise,
             VERBOSE_MODE,
             STEP_TYPE_FULL,
             init_delay
         )
+        self.current_rho = rho
