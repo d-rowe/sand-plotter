@@ -1,11 +1,15 @@
-from math import pi
+from decimal import Decimal
 from Plotter import Plotter
+
+TRACK_PATH = "temp.thr"
 
 
 def main():
     plotter = Plotter()
-    plotter.home()
-    plotter.move_to(2 * pi, 1)
+    with open(TRACK_PATH) as f:
+        for line in f:
+            theta, rho = map(Decimal, line.split(" "))
+            plotter.move_to(theta, rho)
 
 
 if __name__ == '__main__':

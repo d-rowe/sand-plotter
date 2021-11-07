@@ -12,8 +12,5 @@ class Plotter:
         self.gimbal.move_to(theta)
         self.arm.move_to(rho)
 
-    def home(self):
-        self.move_to(0, 0)
-
     def set_speed(self, speed: Decimal):
         self.speed = speed

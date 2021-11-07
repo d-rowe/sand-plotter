@@ -17,6 +17,9 @@ class Gimbal:
 
     def move_to(self, theta: Decimal):
         theta_delta = theta - self.current_theta
+        if theta_delta == 0:
+            return
+
         is_cc_wise = theta_delta >= 0
         wait = 0.5
         steps = abs(theta_delta) * STEPS_PER_THETA

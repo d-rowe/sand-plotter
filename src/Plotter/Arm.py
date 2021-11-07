@@ -18,6 +18,9 @@ class Arm:
 
     def move_to(self, rho: Decimal):
         rho_delta = rho - self.current_rho
+        if rho_delta == 0:
+            return
+
         is_cc_wise = rho_delta >= 0
         wait = 0.5
         steps = abs(rho_delta) * LENGTH_IN_MM * STEPS_PER_MM
