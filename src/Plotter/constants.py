@@ -1,0 +1,3 @@
+MOTOR_TYPE = "Nema"
+STEP_TYPE_FULL = "full"
+VERBOSE_MODE = False
